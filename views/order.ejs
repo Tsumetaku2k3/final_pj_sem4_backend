@@ -1,0 +1,105 @@
+<%- include('header') %>
+<%- include('aside') %>
+
+<div class="content-wrapper">
+    <section class="content-header">
+        <h1><i class="fa fa-th" aria-hidden="true"></i> Quản lý Đơn hàng</h1>
+    </section>
+    <section class="content">
+        <div class="box">
+            <div class="box-body">
+                <form action method="get" class="form-inline" role="form">
+                    <div class="form-group">
+                        <input class="form-control" name="id"
+                            placeholder="Nhập Mã cần tìm......"
+                            value="<%= searchId %>">
+                    </div>
+                    <button type="submit" class="btn btn-primary"><i
+                            class="fa fa-search"></i></button>
+                </form>
+                <hr>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Mã đơn hàng</th>
+                            <th>Tên người đặt</th>
+                            <th>Số điện thoại</th>
+                            <th>Địa chỉ</th>
+                            <th>Chú thích</th>
+                            <th>Trạng thái đơn hàng</th>
+                            <th>Tổng giá đơn</th>
+                            <th>Ngày đặt đơn</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% dbOrd.forEach((ord, key) => { %>
+                        <tr>
+                            <td scope="row">
+                                <%= key + 1 %>
+                            </td>
+                            <td><%= ord.id %></td>
+                            <td><%= ord.name %></td>
+                            <td><%= ord.phone %></td>
+                            <td><%= ord.address %></td>
+                            <td><%= ord.note %></td>
+                            <td><%= ord.status %></td>
+                            <td><%= ord.total_price %></td>
+                            <td class="created-at"><%= ord.created_at %></td>
+                            <td class="text-right">
+                                <% if (ord.status !== 'Đã giao' && ord.status
+                                !== 'Đã hủy') { %>
+                                <a href="/edit-order/<%= ord.id %>"
+                                    class="btn btn-sm btn-primary"><i
+                                        class="fa fa-edit"></i> Sửa</a>
+                                <% } else { %>
+                                <span
+                                    class="btn btn-sm btn-secondary disabled"><i
+                                        class="fa fa-edit"></i> Sửa</span>
+                                <% } %>
+                                <a href="/order-details/<%= ord.id %>"
+                                    class="btn btn-sm btn-success"><i
+                                        class="fa fa-eye"></i> Xem</a>
+                            </td>
+                        </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
+            <div class="box-footer">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                        <% if (currentPage > 1) { %>
+                        <li class="page-item">
+                            <a class="page-link"
+                                href="/order?page=<%= currentPage - 1 %>&name=<%= searchId %>">
+                                <i class="fa fa-chevron-left"></i>
+                            </a>
+                        </li>
+                        <% } %>
+                        <% for (let i = 1; i <= totalPages; i++) { %>
+                        <li
+                            class="page-item <%= i === currentPage ? 'active' : '' %>">
+                            <a class="page-link"
+                                href="/order?page=<%= i %>&name=<%= searchId %>">
+                                <%= i %>
+                            </a>
+                        </li>
+                        <% } %>
+                        <% if (currentPage < totalPages) { %>
+                        <li class="page-item">
+                            <a class="page-link"
+                                href="/order?page=<%= currentPage + 1 %>&name=<%= searchId %>">
+                                <i class="fa fa-chevron-right"></i>
+                            </a>
+                        </li>
+                        <% } %>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </section>
+</div>
+
+<%- include('footer') %>

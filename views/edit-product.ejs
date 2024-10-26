@@ -1,0 +1,70 @@
+<%- include('header') %>
+<%- include('aside') %>
+
+<div class="content-wrapper">
+    <section class="content-header">
+        <h1><i class="fa fa-edit"></i> Edit Product</h1>
+    </section>
+    <section class="content">
+        <div class="box">
+            <div class="row">
+                <div class="col-md-6">
+                    <form action="" method="POST" role="form" enctype="multipart/form-data">
+                        <div class="box-body">
+                            <input type="hidden" name="image" value="<%= dbPro.image %>">
+                            <div class="form-group">
+                                <label>Product Name</label>
+                                <input type="text" class="form-control" name="name" value="<%= dbPro.name %>">
+                            </div>
+                            <div class="form-group">
+                                <label>Product Price</label>
+                                <input type="number" class="form-control" name="price" value="<%= dbPro.price %>">
+                            </div>
+                            <div class="form-group">
+                                <label>Discount Price</label>
+                                <input type="number" class="form-control" name="sale_price" value="<%= dbPro.sale_price %>">
+                            </div>
+                            <div class="form-group">
+                                <label>Product Image</label>
+                                <input type="file" onchange="showImg(this)" class="form-control" name="image">
+                            </div>
+                            <div class="form-group">
+                                <label>Category</label>
+                                <select name="category_id" class="form-control">
+                                    <option value>Select a Category</option>
+                                    <% dbCat.forEach((cat) => { %>
+                                        <option value="<%= cat.id %>" <%= cat.id == dbPro.category_id ? 'selected' : '' %>><%= cat.name %></option>
+                                    <% }) %>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Product Status</label>
+                                <select name="status" class="form-control">
+                                    <option value="Còn hàng" <%= dbPro.status === "Còn hàng" ? 'selected' : '' %>>In Stock</option>
+                                    <option value="Hết hàng" <%= dbPro.status === "Hết hàng" ? 'selected' : '' %>>Out of Stock</option>
+                                    <option value="Ngừng bán" <%= dbPro.status === "Ngừng bán" ? 'selected' : '' %>>Discontinued</option>
+                                    <option value="Tạm hết" <%= dbPro.status === "Tạm hết" ? 'selected' : '' %>>Temporarily Out</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Product Details</label>
+                                <textarea name="description" rows="5" class="form-control"><%= dbPro.description %></textarea>
+                            </div>
+                        </div>
+                        <div class="box-footer">
+                            <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Save</button>
+                            <a href="/category" class="btn btn-secondary pull-right"><i class="fa fa-arrow-left"></i> Back</a>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-6">
+                    <a href="#" class="thumbnail" style="height: 500px;">
+                        <img id="show-img" style="height: 100%;" src="images/<%= dbPro.image %>" alt="Product Image">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<%- include('footer') %>

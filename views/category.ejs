@@ -1,0 +1,80 @@
+<%- include('header') %>
+<%- include('aside') %>
+
+<div class="content-wrapper">
+    <section class="content-header">
+        <h1><i class="fa fa-th"></i> Category Management</h1>
+    </section>
+    <section class="content">
+        <div class="box">
+            <div class="box-body">
+                <form action method="get" class="form-inline" role="form">
+                    <div class="form-group">
+                        <input class="form-control" name="name" placeholder="Enter name to search..." value="<%= searchName %>">
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fa fa-search"></i>
+                    </button>
+                    <a href="/create-category" class="btn btn-success pull-right">
+                        <i class="fa fa-plus"></i> Add New
+                    </a>
+                </form>
+                <hr>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Category Name</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% dbCat.forEach((cat, index) => { %>
+                        <tr>
+                            <td><%= index + 1 %></td>
+                            <td><%= cat.name %></td>
+                            <td class="text-right">
+                                <a href="/edit-category/<%= cat.id %>" class="btn btn-sm btn-primary">
+                                    <i class="fa fa-edit"></i> Edit
+                                </a>
+                                <a href="/delete-category/<%= cat.id %>" class="btn btn-sm btn-danger">
+                                    <i class="fa fa-trash"></i> Delete
+                                </a>
+                            </td>
+                        </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
+            <div class="box-footer">
+                <nav aria-label="Pagination">
+                    <ul class="pagination">
+                        <% if (currentPage > 1) { %>
+                        <li class="page-item">
+                            <a class="page-link" href="/category?page=<%= currentPage - 1 %>&name=<%= searchName %>">
+                                <i class="fa fa-chevron-left"></i>
+                            </a>
+                        </li>
+                        <% } %>
+                        <% for (let i = 1; i <= totalPages; i++) { %>
+                        <li class="page-item <%= i === currentPage ? 'active' : '' %>">
+                            <a class="page-link" href="/category?page=<%= i %>&name=<%= searchName %>">
+                                <%= i %>
+                            </a>
+                        </li>
+                        <% } %>
+                        <% if (currentPage < totalPages) { %>
+                        <li class="page-item">
+                            <a class="page-link" href="/category?page=<%= currentPage + 1 %>&name=<%= searchName %>">
+                                <i class="fa fa-chevron-right"></i>
+                            </a>
+                        </li>
+                        <% } %>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </section>
+</div>
+
+<%- include('footer') %>

@@ -1,0 +1,69 @@
+<%- include('header') %>
+<%- include('aside') %>
+
+<div class="content-wrapper">
+    <section class="content-header">
+        <h1><i class="fa fa-pencil-square-o"></i> Edit Order</h1>
+    </section>
+    <section class="content">
+        <div class="box">
+            <div class="row">
+                <div class="col-md-4">
+                    <form action="" method="POST" role="form">
+                        <div class="box-body">
+                            <input type="hidden" name="account_id" value="<%= dbOrd.account_id %>">
+                            <div class="form-group">
+                                <label>Order ID</label>
+                                <input type="text" class="form-control" name="id" value="<%= dbOrd.id %>" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label>Customer Name</label>
+                                <input type="text" class="form-control" name="name" value="<%= dbOrd.name %>" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label>Phone Number</label>
+                                <input type="text" class="form-control" name="phone" value="<%= dbOrd.phone %>" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label>Address</label>
+                                <input type="text" class="form-control" name="address" value="<%= dbOrd.address %>" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label>Notes</label>
+                                <input type="text" class="form-control" name="note" value="<%= dbOrd.note %>" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label>Order Status</label>
+                                <select name="status" class="form-control" <%= (dbOrd.status === "Đã giao" || dbOrd.status === "Đã hủy") ? 'disabled' : '' %>>
+                                    <% if (dbOrd.status !== "Chờ giao hàng") { %>
+                                        <% if (dbOrd.status !== "Chờ lấy hàng") { %>
+                                            <option value="Chờ xác nhận" <%= dbOrd.status === "Chờ xác nhận" ? 'selected' : '' %>>Chờ xác nhận</option>
+                                        <% } %>
+                                        <option value="Chờ lấy hàng" <%= dbOrd.status === "Chờ lấy hàng" ? 'selected' : '' %>>Chờ lấy hàng</option>
+                                    <% } %>
+                                    <option value="Chờ giao hàng" <%= dbOrd.status === "Chờ giao hàng" ? 'selected' : '' %>>Chờ giao hàng</option>
+                                    <option value="Đã giao" <%= dbOrd.status === "Đã giao" ? 'selected' : '' %>>Đã giao</option>
+                                    <option value="Đã hủy" <%= dbOrd.status === "Đã hủy" ? 'selected' : '' %>>Đã hủy</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Total Price</label>
+                                <input type="text" class="form-control" name="total_price" value="<%= dbOrd.total_price %>" readonly>
+                            </div>
+                        </div>
+                        <div class="box-footer">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fa fa-save"></i> Save
+                            </button>
+                            <a href="/order" class="btn btn-secondary pull-right">
+                                <i class="fa fa-arrow-left"></i> Back
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<%- include('footer') %>
